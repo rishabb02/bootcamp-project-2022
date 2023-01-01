@@ -1,0 +1,151 @@
+.nav-bar{
+    display: flex;
+    padding: 5px 5px;
+    width: auto;
+    height: 100px;
+    flex: auto;
+    justify-content: space-between;
+    align-items: center;
+    background-color:peachpuff;
+    border-style: solid;
+    border-color: gray;
+    border-width: thick;
+}
+
+.nav-elements{
+    display: flex;
+    list-style-type: none;
+    margin: none;
+    gap: 10px;
+}
+
+.nav-elements :hover{
+    color:aliceblue;
+}
+
+.header-home{
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+.recipe-cards{
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    flex: auto;
+    flex-direction: row;
+}
+
+.singular-card{
+    background-color: peachpuff;
+    border-style: solid;
+    border-color: gray;
+    border-width: 10px;
+    margin: 10px;
+    padding: 20px;
+    justify-content:space-around;
+    text-align: center;
+    overflow-wrap: normal;
+    flex-grow: 1;
+    width:max-content;
+    flex-grow: 1;
+    flex-shrink: inherit;
+    flex-basis: auto;
+    width: 300px;
+    height: 400px;
+}
+
+html{
+    background-color: lightgray;
+}
+
+img{
+    height: 200px;
+    width: 200px;
+}
+
+a {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+  }
+  
+  a:hover {
+    color: var(--main-accent);
+  }
+.singular-card .food-label{
+    
+    font-size: 35px;
+}
+
+.ingredient{
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    align-items: center;
+    background-color: darkolivegreen;
+    border-style: solid;
+    border-color: gray;
+    border-width: thick;
+    float: right;
+    width: 550px;
+}
+
+.instruction{
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    align-items: center;
+    background-color: darkolivegreen;
+    border-style: solid;
+    border-color: gray;
+    border-width: thick;
+    width: 1250px;
+    padding-top: 0px;
+}
+
+.ingredients{
+    text-align: left;
+    float: right;
+    padding-top: 0px;
+    width: 550px;
+}
+
+.instructions{
+    text-align: left;
+}
+
+.pani-puri-card{
+    background-color: peachpuff;
+    border-style: solid;
+    border-color: gray;
+    border-width: 10px;
+    margin: 10px;
+    padding: 20px;
+    justify-content:space-around;
+    text-align: center;
+    overflow-wrap: normal;
+    flex-grow: 1;
+    width:max-content;
+    flex-grow: 1;
+    flex-shrink: inherit;
+    flex-basis: auto;
+    width: 1340px;
+    height: 1200px;
+    float: left;
+    
+}
+
+.pani-puri-pic{
+    width: 500px;
+    height: 500px;
+    padding: 50px;
+    padding-right: 350px;
+}
+
+.label-and-ingredients{
+    flex: content;
+    width: 250px;
+    float: right;
+}
