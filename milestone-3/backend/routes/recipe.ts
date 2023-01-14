@@ -52,7 +52,7 @@ router.put("/recipe/:recipeName/ingredient", async (req: Request, res: Response)
     if (recipe) {
         recipe.ingredients = [...recipe.ingredients, newIngredient];
         await recipe.save();
-        res.status(200).send("Updated is completed")
+        res.status(200).json({updatedData: recipe})
     }
     else {
         res.status(400).send("Update could not be completed")
@@ -70,7 +70,7 @@ router.put("/recipe/:recipeName/instruction", async (req: Request, res: Response
     if (recipe) {
         recipe.instructions = [...recipe.instructions, newInstruction];
         await recipe.save();
-        res.status(200).send("Updated is completed")
+        res.status(200).json({updatedData: recipe})
     }
     else {
         res.status(400).send("Update could not be completed")

@@ -4,6 +4,8 @@ import React, { useState, useEffect, ChangeEvent, ReactComponentElement } from '
 import { findDOMNode } from "react-dom";
 import axios from "axios";
 
+const URL: string = 'http://localhost:3001'
+
 interface Recipe {
     name: string;
     desc: string;
@@ -33,16 +35,44 @@ export default function RecipePage() {
             return word[0].toUpperCase() + word.substring(1)
         }).join(" ")
 
-        axios.put("/recipe/recipeTitle/ingredient", {
+        axios.put(`${URL}/api/recipe/${recipeTitle}/ingredient`, {
             ingredients: ingredient
         })
-            .then((data) => {
-                console.log(data)
+            .then((response) => {
+                console.log(response.data.updatedData)
+                let updatedData = response.data.updatedData;
+                setRecipe((currentRecipe) => [updatedData!])
+                setAllIngredients((current) => [ ...updatedData!.ingredients]);
+                setIngredient("")
             })
+            .catch((err) => console.log(err))
+    }
+
+
+    function addInstruction() {
+        // Call to the mongodb 
+        const title = id!.replace("-", " ")
+        const words = title?.split(" ")
+
+        let recipeTitle = words?.map((word) => {
+            return word[0].toUpperCase() + word.substring(1)
+        }).join(" ")
+
+        axios.put(`${URL}/api/recipe/${recipeTitle}/instruction`, {
+            instructions: instruction
+        })
+            .then((response) => {
+                console.log(response.data.updatedData)
+                let updatedData = response.data.updatedData;
+                setRecipe((currentRecipe) => [updatedData!])
+                setAllInstructions((current) => [ ...updatedData!.instructions]);
+                setInstruction("")
+            })
+            .catch((err) => console.log(err))
     }
 
     function getRecipes() {
-        axios.get("http://localhost:3001/api/recipe")
+        axios.get(`${URL}/api/recipe`)
             .then((response) => {
                 console.log('data', response.data)
                 const title = id!.replace("-", " ")
@@ -58,10 +88,10 @@ export default function RecipePage() {
 
                 console.log("current Recipe", currentRec)
 
-                setRecipe((currentRecipe) => [...currentRecipe, currentRec!]);
-                setAllIngredients(currentRec!.ingredients)
+                setRecipe((currentRecipe) => [...currentRecipe, ...currentRec!]);
+                setAllIngredients((current) => [...current, ...currentRec![0].ingredients])
 
-                setAllInstructions(currentRec!.instructions)
+                setAllInstructions(currentRec![0].instructions)
                 // setRecipeData(currentRec)
             })
             .catch((err) => {
@@ -73,25 +103,25 @@ export default function RecipePage() {
     useEffect(() => {
         getRecipes();
 
-        const findRecipe = recipes.find(recipe => {
-            const title = id!.replace("-", " ")
-            const words = title?.split(" ")
+        // const findRecipe = recipes.find(recipe => {
+        //     const title = id!.replace("-", " ")
+        //     const words = title?.split(" ")
 
-            console.log("words : ", words)
+        //     console.log("words : ", words)
 
-            let recipeTitle = words?.map((word) => {
-                return word[0].toUpperCase() + word.substring(1)
-            }).join(" ")
+        //     let recipeTitle = words?.map((word) => {
+        //         return word[0].toUpperCase() + word.substring(1)
+        //     }).join(" ")
 
-            return recipe.name === recipeTitle;
-        });
+        //     return recipe.name === recipeTitle;
+        // });
 
-        console.log("findRecipe: ", findRecipe)
+        // console.log("findRecipe: ", findRecipe)
 
-        setRecipe((currentRecipe) => [...currentRecipe, findRecipe!]);
-        setAllIngredients(findRecipe!.ingredients)
+        // setRecipe((currentRecipe) => [...currentRecipe, findRecipe!]);
+        // setAllIngredients(findRecipe!.ingredients)
 
-        setAllInstructions(findRecipe!.instructions)
+        // setAllInstructions(findRecipe!.instructions)
     }, [])
     // const recipe: Recipe | undefined = recipes.find(recipe => recipe.id === id);
     return (
@@ -115,7 +145,7 @@ export default function RecipePage() {
                         <h3 className="ingredient">Ingredients</h3>
                         <ul className="">
                             {
-                                allIngredients.map((ingred, idx) =>
+                               allIngredients && allIngredients.map((ingred, idx) =>
                                     <React.Fragment key={idx}>
                                         <li>{ingred}</li>
                                     </React.Fragment>
@@ -161,10 +191,7 @@ export default function RecipePage() {
                         setInstruction(e.target.value);
                     }}
                 />
-                <button onClick={() => {
-                    setAllInstructions([...allInstructions, instruction])
-                    setInstruction("")
-                }}>
+                <button onClick={addInstruction}>
                     Add Instruction
                 </button>
             </div>
